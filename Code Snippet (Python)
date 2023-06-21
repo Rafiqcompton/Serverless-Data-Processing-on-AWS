@@ -1,0 +1,23 @@
+import json
+import boto3
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+    input_bucket = event['Records'][0]['s3']['bucket']['name']
+    input_key = event['Records'][0]['s3']['object']['key']
+
+    # Read data from S3
+    response = s3.get_object(Bucket=input_bucket, Key=input_key)
+    data = json.loads(response['Body'].read().decode('utf-8'))
+
+    # Process data
+    processed_data = process_data(data)
+
+    # Write processed data to S3
+    output_bucket = 'your-output-bucket'
+    output_key = 'processed/' + input_key
+    s3.put_object(Bucket=output_bucket, Key=output_key, Body=json.dumps(processed_data))
+
+def process_data(data):
+    # Implement your data processing logic here
+    return data
