@@ -1,0 +1,3 @@
+
+Set up AWS Lambda, S3, and other required services.
+Configure the Lambda function to be triggered by S3 events.
